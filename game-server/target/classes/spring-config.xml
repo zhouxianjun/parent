@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-lazy-init="true">
+
+    <util:map id="config_params" key-type="java.lang.String">
+        <entry key="game_server_boss_thread" value="1"/>
+        <entry key="game_server_worker_thread" value="1"/>
+        <entry key="center_ip" value="127.0.0.1"/>
+        <entry key="center_port" value="4000"/>
+
+        <entry key="game_server_area" value="1"/>
+        <entry key="game_server_probability" value="1"/>
+        <entry key="game_server_ip" value="127.0.0.1"/>
+        <entry key="game_server_port" value="8586"/>
+        <entry key="game_server_name" value="test"/>
+        <entry key="game_server_version" value="1"/>
+        <entry key="game_server_max" value="1"/>
+    </util:map>
+</beans>
