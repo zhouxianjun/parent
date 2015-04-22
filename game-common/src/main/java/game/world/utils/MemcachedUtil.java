@@ -2,9 +2,6 @@ package game.world.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.rubyeye.xmemcached.MemcachedClient;
-import net.rubyeye.xmemcached.exception.MemcachedException;
-
-import java.util.concurrent.TimeoutException;
 
 @Slf4j
 public class MemcachedUtil {

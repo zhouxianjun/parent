@@ -6,13 +6,26 @@
 	<version>1.0</version>
 	<packaging>pom</packaging>
 
+	<modules>
+		<module>compress</module>
+		<module>dao</module>
+		<module>util</module>
+		<module>web</module>
+		<module>payment</module>
+		<module>game-common</module>
+		<module>game-protobuf</module>
+		<module>game-server</module>
+		<module>game-center</module>
+		<module>game-login</module>
+	</modules>
+
 	<properties>
 		<hibernate>4.2.2.Final</hibernate>
-		<spring>3.2.3.RELEASE</spring>
+		<spring>3.2.4.RELEASE</spring>
 		<jackson>1.9.13</jackson>
 		<servlet>3.1.0</servlet>
 		<mybatis.version>3.2.2</mybatis.version>
-		<mybatis-spring.version>1.1.1</mybatis-spring.version>
+		<mybatis-spring>1.1.1</mybatis-spring>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

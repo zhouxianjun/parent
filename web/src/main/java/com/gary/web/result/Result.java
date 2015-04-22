@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import com.gary.web.exception.error.ErrorCode;
+import com.gary.error.ErrorCode;
 
 public class Result implements Serializable {
 	private static final long serialVersionUID = 816334571679000487L;

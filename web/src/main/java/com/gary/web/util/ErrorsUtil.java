@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.gary.error.ErrorDesc;
+import com.gary.error.Errors;
+import com.gary.util.ClassUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.gary.web.exception.error.ErrorCode;
-import com.gary.web.exception.error.ErrorDesc;
-import com.gary.web.exception.error.Errors;
+import com.gary.error.ErrorCode;
 
 /**
  * 错误信息

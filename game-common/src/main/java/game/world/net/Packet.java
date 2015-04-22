@@ -2,7 +2,7 @@ package game.world.net;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
-import game.world.error.ErrorCode;
+import com.gary.error.ErrorCode;
 import game.world.protobuf.ResultPro;
 import game.world.utils.ErrorsUtil;
 import io.netty.buffer.ByteBuf;

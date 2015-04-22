@@ -1,23 +1,17 @@
 package com.gary.web.exception;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-
-import com.gary.web.exception.error.ErrorCode;
+import com.gary.error.ErrorCode;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.ParameterError;
 import com.gary.web.result.RequestParameterError;
 import com.gary.web.result.Result;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 public abstract class ExceptionHandler {
 	protected Result exceptionHandler(Exception ex, Map<String, Integer> exceptionMap, Locale locale){

@@ -10,6 +10,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.gary</groupId>
+			<artifactId>util</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson}</version>

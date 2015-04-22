@@ -1,4 +1,4 @@
-package game.world.error;
+package com.gary.error;
 
 
 import org.slf4j.Logger;

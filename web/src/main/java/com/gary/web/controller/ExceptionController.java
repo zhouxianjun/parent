@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.gary.web.exception.error.ErrorCode;
+import com.gary.error.ErrorCode;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
 

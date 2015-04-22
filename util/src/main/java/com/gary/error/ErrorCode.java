@@ -1,4 +1,4 @@
-package com.gary.web.exception.error;
+package com.gary.error;
 
 public abstract interface ErrorCode extends Errors {
 	final int FAIL = 0;

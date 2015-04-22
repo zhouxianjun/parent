@@ -1,7 +1,7 @@
 package game.world.event;
 
 import game.world.WorldManager;
-import game.world.error.ErrorCode;
+import com.gary.error.ErrorCode;
 import game.world.handler.Handler;
 import game.world.net.Packet;
 import game.world.netty.codec.Worker;

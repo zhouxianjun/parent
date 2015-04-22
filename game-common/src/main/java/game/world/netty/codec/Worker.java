@@ -4,7 +4,7 @@ import game.world.WorldManager;
 import game.world.disruptor.DisruptorEvent;
 import game.world.event.ReceivedEvent;
 import game.world.protobuf.ResultPro;
-import game.world.utils.ClassUtil;
+import com.gary.util.ClassUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;

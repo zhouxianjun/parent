@@ -29,17 +29,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
+            <version>${spring}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
+            <version>${spring}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
+            <version>${spring}</version>
         </dependency>
         <dependency>
             <groupId>opensymphony</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis-spring.version}</version>
+            <version>${mybatis-spring}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

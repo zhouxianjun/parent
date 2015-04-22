@@ -5,7 +5,7 @@ import game.server.Cache;
 import game.world.AppContext;
 import game.world.BasicUser;
 import game.world.WorldManager;
-import game.world.error.ErrorCode;
+import com.gary.error.ErrorCode;
 import game.world.event.Event;
 import game.world.event.HandlerEvent;
 import game.world.event.ReceivedEvent;

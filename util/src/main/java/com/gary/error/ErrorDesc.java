@@ -1,4 +1,4 @@
-package game.world.error;
+package com.gary.error;
 
 public abstract interface ErrorDesc extends Errors {
 	final String FAIL = "操作失败";
