@@ -17,6 +17,7 @@
 		<module>game-server</module>
 		<module>game-center</module>
 		<module>game-login</module>
+		<module>game-service</module>
 	</modules>
 
 	<properties>
