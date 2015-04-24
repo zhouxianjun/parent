@@ -41,7 +41,7 @@ public interface LoginService<O extends LoginInfo> {
      */
     void logout(String key);
 
-    Server getServer();
+    Server getServer(String version, Integer area);
 
     /**
      * 先在缓存取,没有则在数据库取

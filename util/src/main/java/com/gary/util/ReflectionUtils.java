@@ -45,6 +45,7 @@ public class ReflectionUtils {
 		Method method = getDeclaredMethod(object, methodName, parameterTypes) ;
 		
 		//抑制Java对方法进行检查,主要是针对私有方法而言
+		boolean access = method.isAccessible();
 		method.setAccessible(true) ;
 		
 			try {
@@ -59,6 +60,8 @@ public class ReflectionUtils {
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
+			} finally {
+				method.setAccessible(access);
 			}
 		
 		return null;
@@ -101,8 +104,9 @@ public class ReflectionUtils {
 	
 		//根据 对象和属性名通过反射 调用上面的方法获取 Field对象
 		Field field = getDeclaredField(object, fieldName) ;
-		
+
 		//抑制Java对其的检查
+		boolean access = field.isAccessible();
 		field.setAccessible(true) ;
 		
 		try {
@@ -112,8 +116,9 @@ public class ReflectionUtils {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
+		} finally {
+			field.setAccessible(access);
 		}
-		
 	}
 	
 	/**
@@ -123,22 +128,24 @@ public class ReflectionUtils {
 	 * @return : 父类中的属性值
 	 */
 	
-	public static Object getFieldValue(Object object, String fieldName){
+	public static <T> T getFieldValue(Object object, String fieldName){
 		
 		//根据 对象和属性名通过反射 调用上面的方法获取 Field对象
 		Field field = getDeclaredField(object, fieldName) ;
-		
+
+		if (field == null)
+			return null;
 		//抑制Java对其的检查
+		boolean access = field.isAccessible();
 		field.setAccessible(true) ;
-		
 		try {
 			//获取 object 中 field 所代表的属性值
-			return field.get(object) ;
-			
+			return (T)field.get(object) ;
 		} catch(Exception e) {
 			e.printStackTrace() ;
+		} finally {
+			field.setAccessible(access);
 		}
-		
 		return null;
 	}
 }

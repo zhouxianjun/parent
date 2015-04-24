@@ -50,4 +50,15 @@ public class Page<T> implements Serializable {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+
+	/**
+	 * 获取当前记录索引
+	 * @return
+	 */
+	public int getCurrentIndex() {
+		int currentIndex = (getPageNum() - 1) * getPageSize();
+		if (currentIndex < 0)
+			currentIndex = 0;
+		return currentIndex;
+	}
 }

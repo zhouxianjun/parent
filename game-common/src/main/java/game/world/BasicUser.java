@@ -17,7 +17,7 @@ import java.util.Iterator;
  */
 @Slf4j
 public class BasicUser {
-    public int id;
+    public String id;
 
     public String name;
 

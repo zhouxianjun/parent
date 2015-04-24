@@ -39,6 +39,12 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>jdom</groupId>
