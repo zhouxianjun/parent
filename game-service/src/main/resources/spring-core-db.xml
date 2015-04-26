@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    					http://www.springframework.org/schema/util 
+    					http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-lazy-init="false">
+	
+	<bean id="jdbcPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:jdbc.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<!--***************** 连接核心库的配置 *****************-->
+	<bean id="coreWriteDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${core.write.db.jdbc.url}" />
+		<property name="username" value="${core.write.db.jdbc.user}" />
+		<property name="password" value="${core.write.db.jdbc.password}" />
+		<property name="initialSize" value="${core.write.db.pool.init}" />
+		<property name="minIdle" value="${core.write.db.pool.min}" />
+		<property name="maxActive" value="${core.write.db.pool.max}" />
+		<property name="maxWait" value="60000" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		<property name="filters" value="stat,slf4j" />
+	</bean>
+	<bean id="coreReadDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${core.read.db.jdbc.url}" />
+		<property name="username" value="${core.read.db.jdbc.user}" />
+		<property name="password" value="${core.read.db.jdbc.password}" />
+		<property name="initialSize" value="${core.read.db.pool.init}" />
+		<property name="minIdle" value="${core.read.db.pool.min}" />
+		<property name="maxActive" value="${core.read.db.pool.max}" />
+		<property name="maxWait" value="60000" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+		<property name="filters" value="stat,slf4j" />
+	</bean>
+	
+	<!-- 动态数据源，可以在运行时通过相应的holder动态改变当前的数据源-->
+	<bean id="dynamicDataSource" class="com.gary.dao.mybatis.DynamicDataSource">
+		<property name="targetDataSources">
+		   <map key-type="com.gary.dao.mybatis.DataSource">
+		      <entry key="WRITE" value-ref="coreWriteDataSource"/>     
+		      <entry key="READ" value-ref="coreReadDataSource"/>     
+		   </map>     
+		</property>     
+		<property name="defaultTargetDataSource" ref="coreWriteDataSource"/>    
+	</bean> 
+	<bean id="coreSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="typeAliasesPackage" value="game.world.entity" />
+		<property name="typeHandlersPackage" value="game.mapper.handler" />
+	</bean>
+	<bean id="coreMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="game.mapper"/>
+		<property name="sqlSessionFactoryBeanName" value="coreSqlSessionFactory" />
+	</bean>
+	<bean id="coreTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
+	<bean id="coreTansTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="coreTxManager" />
+	</bean>
+	
+</beans>

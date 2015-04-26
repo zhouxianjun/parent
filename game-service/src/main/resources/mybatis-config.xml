@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "classpath:/org/apache/ibatis/builder/xml/mybatis-3-config.dtd">
+
+<configuration>
+	<plugins>
+		<plugin interceptor="com.gary.dao.mybatis.PagePlugin" >
+			<property name="dialect" value="mysql" />
+			<property name="pageSqlId" value=".*ByPage.*" />
+		</plugin>
+	</plugins>
+</configuration>
