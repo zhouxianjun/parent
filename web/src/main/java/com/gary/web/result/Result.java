@@ -83,7 +83,8 @@ public class Result implements Serializable {
 		return executeResult;
 	}
 
-	public void setExecuteResult(ExecuteResult executeResult) {
+	public Result setExecuteResult(ExecuteResult executeResult) {
 		this.executeResult = executeResult;
+		return this;
 	}
 }

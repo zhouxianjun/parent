@@ -1,12 +1,5 @@
 package com.gary.dao.mybatis;
 
-import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Map;
-import java.util.Properties;
-
 import com.gary.dao.result.Page;
 import com.gary.util.ReflectionUtils;
 import org.apache.ibatis.executor.statement.BaseStatementHandler;
@@ -14,16 +7,16 @@ import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
-import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
 import org.springframework.util.StringUtils;
 
-import com.caipiao.commons.utils.ReflectHelper;
-import com.caipiao.commons.view.Page;
+import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Map;
+import java.util.Properties;
 
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
 public class PagePlugin implements Interceptor {
@@ -73,25 +66,25 @@ public class PagePlugin implements Interceptor {
 				Page<?> page = null;
 				if (parameterObject instanceof Page) { // 参数就是Page实体
 					page = (Page<?>) parameterObject;
-					page.setTotalCount(count);
+					page.setCount(count);
 				} else if (parameterObject instanceof Map) {
 					page = (Page<?>) ((Map<?, ?>) parameterObject).get("page");
-					page.setTotalCount(count);
+					page.setCount(count);
 				} else { // 参数为某个实体，该实体拥有Page属性
-					Field pageField = ReflectHelper.getFieldByFieldName(parameterObject, "page");
+					Field pageField = ReflectionUtils.getDeclaredField(parameterObject, "page");
 					if (pageField != null) {
-						page = (Page<?>) ReflectHelper.getValueByFieldName(parameterObject, "page");
+						page = ReflectionUtils.getFieldValue(parameterObject, "page");
 						if (page == null)
 							page = new Page<Object>();
 						// 注释
-						page.setTotalCount(count);
-						ReflectHelper.setValueByFieldName(parameterObject, "page", page); // 通过反射，对实体对象设置分页对象
+						page.setCount(count);
+						ReflectionUtils.setFieldValue(parameterObject, "page", page);
 					} else {
 						throw new NoSuchFieldException(parameterObject.getClass().getName() + "不存在 page 属性！");
 					}
 				}
 				String pageSql = generatePageSql(sql, page);
-				ReflectHelper.setValueByFieldName(boundSql, "sql", pageSql); // 将分页sql语句反射回BoundSql.
+				ReflectionUtils.setFieldValue(boundSql, "sql", pageSql);// 将分页sql语句反射回BoundSql.
 			}
 		}
 		return ivk.proceed();
@@ -151,14 +144,14 @@ public class PagePlugin implements Interceptor {
 			StringBuffer pageSql = new StringBuffer();
 			if ("mysql".equals(dialect)) {
 				pageSql.append(sql);
-				pageSql.append(" limit " + page.getCurrentResult() + "," + page.getPageSize());
+				pageSql.append(" limit " + page.getCurrentIndex() + "," + page.getPageSize());
 			} else if ("oracle".equals(dialect)) {
 				pageSql.append("select * from (select tmp_tb.*,ROWNUM row_id from (");
 				pageSql.append(sql);
 				pageSql.append(") as tmp_tb where ROWNUM<=");
-				pageSql.append(page.getCurrentResult() + page.getPageSize());
+				pageSql.append(page.getCurrentIndex() + page.getPageSize());
 				pageSql.append(") where row_id>");
-				pageSql.append(page.getCurrentResult());
+				pageSql.append(page.getCurrentIndex());
 			}
 			return pageSql.toString();
 		}

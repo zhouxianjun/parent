@@ -11,6 +11,10 @@ public class DaoUUID implements IdentifierGenerator {
 
 	public Serializable generate(SessionImplementor session, Object object)
 			throws HibernateException {
+		return generate();
+	}
+
+	public static String generate(){
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 }

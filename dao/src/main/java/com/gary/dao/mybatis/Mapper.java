@@ -32,14 +32,21 @@ public interface Mapper<E, I> {
      * @param id
      * @return
      */
-    int del(I id);
+    int del(@Param("id") I id);
 
     /**
      * 根据唯一ID获取
      * @param id
      * @return
      */
-    E get(I id);
+    E get(@Param("id") I id);
+
+    /**
+     * 根据查询条件获取
+     * @param params
+     * @return
+     */
+    E get(@Param("params") Map<String, Object> params);
 
     /**
      * 使用 DUPLICATE KEY UPDATE

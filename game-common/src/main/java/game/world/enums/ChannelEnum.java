@@ -22,11 +22,15 @@ public enum ChannelEnum implements BasicEnum {
         this.name = name;
     }
 
-    public ChannelEnum getByVal(int val){
+    public static ChannelEnum getByVal(int val, ChannelEnum def){
         for (ChannelEnum eu: values()) {
             if (eu.val == val)
                 return eu;
         }
-        return null;
+        return def;
+    }
+
+    public static ChannelEnum getByVal(int val){
+        return getByVal(val, null);
     }
 }

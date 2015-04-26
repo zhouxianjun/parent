@@ -22,11 +22,15 @@ public enum ThirdTypeEnum implements BasicEnum {
         this.name = name;
     }
 
-    public ThirdTypeEnum getByVal(int val){
+    public static ThirdTypeEnum getByVal(int val, ThirdTypeEnum def){
         for (ThirdTypeEnum eu: values()) {
             if (eu.val == val)
                 return eu;
         }
-        return null;
+        return def;
+    }
+
+    public static ThirdTypeEnum getByVal(int val){
+        return getByVal(val, null);
     }
 }

@@ -10,6 +10,7 @@ import lombok.Getter;
  * @date 2015/4/23 10:22
  */
 public enum PlatEnum implements BasicEnum {
+    UNKNOWN(0, "未知"),
     ANDROID(1, "安卓");
 
     @Getter
@@ -22,11 +23,15 @@ public enum PlatEnum implements BasicEnum {
         this.name = name;
     }
 
-    public PlatEnum getByVal(int val){
+    public static PlatEnum getByVal(int val, PlatEnum def){
         for (PlatEnum platEnum : values()) {
             if (platEnum.val == val)
                 return platEnum;
         }
-        return null;
+        return def;
+    }
+
+    public static PlatEnum getByVal(int val){
+        return getByVal(val, null);
     }
 }

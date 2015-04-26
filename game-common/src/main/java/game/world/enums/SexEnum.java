@@ -25,11 +25,15 @@ public enum SexEnum implements BasicEnum {
         this.name = name;
     }
 
-    public SexEnum getByVal(int val){
+    public static SexEnum getByVal(int val, SexEnum def){
         for (SexEnum eu: values()) {
             if (eu.val == val)
                 return eu;
         }
-        return null;
+        return def;
+    }
+
+    public static SexEnum getByVal(int val){
+        return getByVal(val, null);
     }
 }

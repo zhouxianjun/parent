@@ -16,6 +16,11 @@
             <artifactId>web</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.gary</groupId>
+            <artifactId>game-common</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>game-login</finalName>

@@ -4,6 +4,7 @@ import com.gary.util.dto.DataMap;
 import game.world.enums.ChannelEnum;
 import game.world.enums.PlatEnum;
 import game.world.enums.SexEnum;
+import game.world.enums.ThirdTypeEnum;
 import lombok.Data;
 
 /**
@@ -19,6 +20,11 @@ public class LoginInfo {
 
     /**渠道*/
     private ChannelEnum channel;
+
+    /**
+     * 第三方
+     */
+    private ThirdTypeEnum thirdType;
 
     private String id;
 
