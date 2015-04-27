@@ -5,7 +5,7 @@ import com.gary.util.code.RSAUtil;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
 import com.google.common.collect.Maps;
-import game.mapper.player.UserMapper;
+import game.mapper.player.PlayerMapper;
 import game.world.dto.LoginInfo;
 import game.world.entity.user.Player;
 import game.world.enums.ChannelEnum;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Slf4j
 public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
     @Autowired
-    private UserMapper userMapper;
+    private PlayerMapper userMapper;
     private Md5PasswordEncoder md5 = new Md5PasswordEncoder();
     @Override
     public Result login(LoginInfo loginInfo, String ip, HttpServletRequest request, HttpServletResponse response) {

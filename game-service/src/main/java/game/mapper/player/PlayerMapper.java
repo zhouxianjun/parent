@@ -6,5 +6,5 @@ import game.world.entity.user.Player;
 /**
  * Created by Gary on 2015/4/26.
  */
-public interface UserMapper extends Mapper<Player,String> {
+public interface PlayerMapper extends Mapper<Player,String> {
 }

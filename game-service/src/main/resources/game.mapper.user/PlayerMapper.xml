@@ -3,11 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="game.mapper.player.UserMapper">
-    <insert id="save" parameterType="game.world.entity.user.Player" useGeneratedKeys="true"
-            keyProperty="id">
-        insert into member(<include refid="all_cols" />)
-        values(#{login_name},#{password},#{nick_name},#{real_name},#{phone},#{email},#{status},#{register_time},#{access_from},#{sell_channel},#{id_card_no},#{last_login_time},#{third_type},#{third_id},#{phone_verify},#{pwd_level})
+<mapper namespace="game.mapper.player.PlayerMapper">
+    <insert id="save" parameterType="game.world.entity.user.Player">
+        insert into t_player VALUES ()
     </insert>
 
     <update id="update" parameterType="Member">
