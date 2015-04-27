@@ -5,7 +5,7 @@ import com.gary.util.code.RSAUtil;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
 import com.google.common.collect.Maps;
-import game.mapper.user.UserMapper;
+import game.mapper.player.UserMapper;
 import game.world.dto.LoginInfo;
 import game.world.entity.user.Player;
 import game.world.enums.ChannelEnum;

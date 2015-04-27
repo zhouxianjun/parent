@@ -28,6 +28,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring}</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.druid</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.2</version>

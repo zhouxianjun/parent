@@ -1,4 +1,4 @@
-package game.mapper.user;
+package game.mapper.player;
 
 import com.gary.dao.mybatis.Mapper;
 import game.world.entity.user.Player;

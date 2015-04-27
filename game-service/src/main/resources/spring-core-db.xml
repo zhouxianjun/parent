@@ -57,7 +57,7 @@
 	<!-- 动态数据源，可以在运行时通过相应的holder动态改变当前的数据源-->
 	<bean id="dynamicDataSource" class="com.gary.dao.mybatis.DynamicDataSource">
 		<property name="targetDataSources">
-		   <map key-type="com.gary.dao.mybatis.DataSource">
+		   <map key-type="com.gary.dao.DataSourceType">
 		      <entry key="WRITE" value-ref="coreWriteDataSource"/>     
 		      <entry key="READ" value-ref="coreReadDataSource"/>     
 		   </map>     
