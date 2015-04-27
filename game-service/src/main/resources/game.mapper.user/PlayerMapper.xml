@@ -5,7 +5,7 @@
 
 <mapper namespace="game.mapper.player.PlayerMapper">
     <insert id="save" parameterType="game.world.entity.user.Player">
-        insert into t_player VALUES ()
+        insert into t_player VALUES (#{id}, #{name}, #{password}, #{nickName}, #{plat}, #{channel}, #{thirdType}, #{version}, #{ip})
     </insert>
 
     <update id="update" parameterType="Member">
