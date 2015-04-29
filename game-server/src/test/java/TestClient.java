@@ -1,5 +1,5 @@
-import game.world.net.Packet;
-import game.world.netty.AbstractClient;
+import com.gary.netty.AbstractClient;
+import com.gary.netty.net.Packet;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 
