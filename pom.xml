@@ -18,6 +18,7 @@
 		<module>game-center</module>
 		<module>game-login</module>
 		<module>game-service</module>
+		<module>netty</module>
 	</modules>
 
 	<properties>

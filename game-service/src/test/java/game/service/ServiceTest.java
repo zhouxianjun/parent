@@ -2,7 +2,6 @@ package game.service;
 
 import com.gary.util.code.RSAUtil;
 import game.world.dto.LoginInfo;
-import game.world.entity.user.Player;
 import game.world.service.LoginService;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
