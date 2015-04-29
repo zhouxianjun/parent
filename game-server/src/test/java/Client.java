@@ -1,4 +1,4 @@
-import game.world.net.Packet;
+import com.gary.netty.net.Packet;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
