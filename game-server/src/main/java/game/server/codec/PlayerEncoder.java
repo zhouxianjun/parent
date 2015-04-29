@@ -1,6 +1,6 @@
 package game.server.codec;
 
-import com.gary.netty.net.AppCmd;
+import com.gary.netty.net.Cmd;
 import com.gary.netty.net.Packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,7 +19,7 @@ public class PlayerEncoder extends MessageToByteEncoder<Packet> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) throws Exception {
         msg.write(out);
-        if (msg.getCmd() != AppCmd.PING){
+        if (msg.getCmd() != Cmd.PING){
             log.debug("回复消息：IP:, 玩家:, CMD:0x{}, 耗时:毫秒", new Object[]{Integer.toHexString(msg.getCmd())});
             //log.debug("回复消息CMD:0x{}, IP:{}, ");
         }
