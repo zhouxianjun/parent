@@ -52,11 +52,11 @@ public class Packet {
     }
 
     public static Packet createGlobalException(){
-        return createException(AppCmd.GLOBAL_EXC, ErrorCode.UNKNOWN_ERROR, null);
+        return createException(Cmd.GLOBAL_EXCEPTION, ErrorCode.UNKNOWN_ERROR, null);
     }
 
     public static Packet createGlobalException(int errorCode){
-        return createException(AppCmd.GLOBAL_EXC, errorCode, null);
+        return createException(Cmd.GLOBAL_EXCEPTION, errorCode, null);
     }
 
     public static Packet createSuccess(short cmd, MessageLite body){
@@ -91,5 +91,5 @@ public class Packet {
         }
     }
 
-    public static final Packet PING = createSuccess(AppCmd.PING, null);
+    public static final Packet PING = createSuccess(Cmd.PING, null);
 }

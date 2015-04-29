@@ -1,8 +1,8 @@
 package game.server;
 
+import com.gary.netty.BasicUser;
 import com.gary.netty.disruptor.DisruptorEvent;
-import game.world.BasicUser;
-import game.world.listeners.UserStateListener;
+import com.gary.netty.listeners.UserStateListener;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Iterator;

@@ -1,18 +1,13 @@
 package game.server.event;
 
+import com.gary.netty.codec.Worker;
+import com.gary.netty.event.HandlerEvent;
+import com.gary.netty.event.ReceivedEvent;
+import com.gary.netty.handler.Handler;
+import com.gary.netty.protobuf.ResultPro;
 import com.sun.tools.javac.util.Assert;
 import game.server.Cache;
-import game.world.AppContext;
-import game.world.BasicUser;
-import game.world.WorldManager;
-import com.gary.error.ErrorCode;
-import game.world.event.Event;
-import game.world.event.HandlerEvent;
-import game.world.event.ReceivedEvent;
-import game.world.handler.Handler;
-import game.world.net.Packet;
-import game.world.netty.codec.Worker;
-import game.world.protobuf.ResultPro;
+import game.world.dto.PlayerUser;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2015/4/14 16:26
  */
 @Slf4j
-public class PlayerReceivedEvent extends ReceivedEvent<BasicUser> {
+public class PlayerReceivedEvent extends ReceivedEvent<PlayerUser> {
 
-    public PlayerReceivedEvent(int length, short cmd, BasicUser object, Channel channel, ResultPro.Result ret, Worker<BasicUser, PlayerReceivedEvent> worker, byte[] data) {
+    public PlayerReceivedEvent(int length, short cmd, PlayerUser object, Channel channel, ResultPro.Result ret, Worker<PlayerUser, PlayerReceivedEvent> worker, byte[] data) {
         super(length, cmd, object, channel, ret, worker, data);
     }
 

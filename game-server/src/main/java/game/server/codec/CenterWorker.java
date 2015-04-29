@@ -1,9 +1,9 @@
 package game.server.codec;
 
+import com.gary.netty.codec.Worker;
 import game.server.GameServer;
 import game.server.event.CenterReceivedEvent;
 import game.world.Server;
-import game.world.netty.codec.Worker;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 

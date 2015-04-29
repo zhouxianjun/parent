@@ -1,9 +1,9 @@
 package game.server.handler;
 
-import game.world.event.Event;
-import game.world.handler.Handler;
-import game.world.net.AppCmd;
-import game.world.net.Cmd;
+import com.gary.netty.event.Event;
+import com.gary.netty.handler.Handler;
+import com.gary.netty.net.Cmd;
+import game.world.AppCmd;
 import org.springframework.stereotype.Component;
 
 /**

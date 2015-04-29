@@ -1,7 +1,7 @@
 package game.server.codec;
 
-import game.world.net.AppCmd;
-import game.world.net.Packet;
+import com.gary.netty.net.AppCmd;
+import com.gary.netty.net.Packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;

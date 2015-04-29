@@ -17,4 +17,7 @@ public @interface Cmd {
 	 * @return
 	 */
 	boolean async() default false;
+
+	short GLOBAL_EXCEPTION = 0x0000;
+	short PING = 0x0001;
 }

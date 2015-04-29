@@ -1,16 +1,15 @@
 package game.server;
 
+import com.gary.netty.AbstractServer;
+import com.gary.netty.handler.Handler;
+import com.gary.netty.net.Dispatcher;
 import com.google.common.collect.Maps;
 import game.server.codec.CenterEncoder;
 import game.server.codec.CenterClientDecoderHandler;
 import game.server.codec.PlayerClientDecoderHandler;
 import game.world.AppContext;
 import game.world.Server;
-import game.world.WorldManager;
 import game.server.codec.PlayerEncoder;
-import game.world.handler.Handler;
-import game.world.net.Dispatcher;
-import game.world.netty.AbstractServer;
 import game.world.utils.MemcachedCacheVar;
 import game.world.utils.MemcachedUtil;
 import io.netty.channel.ChannelHandler;
@@ -56,7 +55,7 @@ public class GameServer extends AbstractServer {
             new AppContext(new String[]{"spring*.xml"});
             Config config = AppContext.getBean(Config.class);
             Server server = AppContext.getBean(Server.class);
-            Cache.GAME_EVENT_CMD = Dispatcher.getHandlers(Handler.class);
+            Cache.GAME_EVENT_CMD = Dispatcher.getHandlers(Handler.class, AppContext.getApplicationContext());
 
             //启动游戏服务器
             gameServer = new GameServer(config.getGameServerBossThread(), config.getGameServerWorkerThread());

@@ -1,7 +1,7 @@
 package game.server.codec;
 
+import com.gary.netty.codec.AbstractDecoderHandler;
 import game.world.Server;
-import game.world.netty.codec.AbstractDecoderHandler;
 import io.netty.channel.group.ChannelGroup;
 
 /**
