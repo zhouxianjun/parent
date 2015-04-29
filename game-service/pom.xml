@@ -28,6 +28,16 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.abel533</groupId>
+            <artifactId>mapper</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
             <version>${mybatis-spring}</version>
@@ -43,5 +53,105 @@
             <version>5.1.11</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    <build>
+        <filters>
+            <filter>${project.basedir}/src/main/filter/${filters.env}.properties</filter>
+        </filters>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <!-- 配置需要替换的目录，使用dev必备的条件 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>src/main/filter</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+
+                <configuration>
+                    <filters>
+                        <filter>${basedir}/src/main/filter/${filters.env}.properties</filter>
+                    </filters>
+                    <webResources>
+
+                        <resource>
+
+                            <filtering>false</filtering>
+                            <directory>src/main/webapp</directory>
+                            <includes>
+                                <include>**/*.ico</include>
+                                <include>**/*.jpg</include>
+                                <include>**/*.png</include>
+                                <include>**/*.gif</include>
+                                <include>**/*.swf</include>
+                                <include>**/*.class</include>
+                                <include>**/*.svn</include>
+                                <include>**/*.jar</include>
+                            </includes>
+                        </resource>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>${basedir}/src/main/webapp</directory>
+                        </resource>
+                    </webResources>
+
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <filters.env>dev</filters.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <filters.env>test</filters.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>product</id>
+            <properties>
+                <filters.env>product</filters.env>
+            </properties>
+        </profile>
+    </profiles>
 </project>

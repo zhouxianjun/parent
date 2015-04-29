@@ -1,6 +1,5 @@
 package game.service.impl;
 
-import com.gary.dao.hibernate.DaoUUID;
 import com.gary.util.code.RSAUtil;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
@@ -16,9 +15,11 @@ import game.world.error.GameErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -28,6 +29,7 @@ import java.util.Map;
  * @date 2015/4/24 11:21
  */
 @Slf4j
+@Service
 public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
     @Autowired
     private PlayerMapper userMapper;
@@ -40,7 +42,8 @@ public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
             String pwd = new String(RSAUtil.decryptByPrivateKey(data));
             Map<String, Object> params = Maps.newHashMap();
             params.put("name", loginInfo.getName());
-            Player player = userMapper.get(params);
+            Player player = new Player();
+            player = userMapper.selectOne(player);
             if (player != null){
                 if (!md5.isPasswordValid(player.getPassword(), pwd, loginInfo.getName())){
                     return result.setExecuteResult(new ExecuteResult(GameErrorCode.PASSWORD_VALID_ERROR));
@@ -54,7 +57,7 @@ public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
             }
 
         } catch (Exception e) {
-            log.warn("{} 登录,密码:{},登录失败!", loginInfo.getId(), loginInfo.getPassword());
+            log.warn("{} 登录,密码:{},登录失败!", loginInfo.getName(), loginInfo.getPassword());
             log.warn("登录失败", e);
         }
         return result;
@@ -64,18 +67,18 @@ public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
     public Result reg(LoginInfo loginInfo, String ip, HttpServletRequest request, HttpServletResponse response) {
         Result result = new Result();
         Player player = new Player();
-        player.setId(DaoUUID.generate());
         player.setChannel(loginInfo.getChannel() == null ? ChannelEnum.DEFAULT : loginInfo.getChannel());
         player.setIp(ip);
         player.setFace(loginInfo.getFace());
         player.setName(loginInfo.getName());
-        player.setNickName(loginInfo.getNickName());
-        player.setPassword(loginInfo.getPassword());
+        player.setNickName(loginInfo.getNickName() == null ? loginInfo.getName() : loginInfo.getNickName());
+        player.setPassword(md5.encodePassword(loginInfo.getPassword(), loginInfo.getName()));
         player.setPlat(loginInfo.getPlat() == null ? PlatEnum.UNKNOWN : loginInfo.getPlat());
         player.setThirdType(loginInfo.getThirdType() == null ? ThirdTypeEnum.DEFAULT : loginInfo.getThirdType());
         player.setSex(loginInfo.getSex() == null ? SexEnum.UNKNOWN : loginInfo.getSex());
         player.setVersion(loginInfo.getVersion());
-        int ret = userMapper.save(player);
+        player.setCreateTime(new Date());
+        int ret = userMapper.insertSelective(player);
         if (ret <= 0)
             result.setExecuteResult(new ExecuteResult(GameErrorCode.REG_FAIL));
         else

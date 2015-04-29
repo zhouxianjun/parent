@@ -1,7 +1,8 @@
 package game.mapper.handler;
 
 import com.gary.dao.mybatis.AbstractEnumTypeHandler;
-import game.world.enums.ChannelEnum;
+import game.world.enums.SexEnum;
+import game.world.enums.ThirdTypeEnum;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
@@ -10,6 +11,6 @@ import org.apache.ibatis.type.MappedTypes;
  * @Description:
  * @date 2015/4/24 11:45
  */
-@MappedTypes({ChannelEnum.class})
-public class ChannelEnumHandler extends AbstractEnumTypeHandler {
+@MappedTypes({SexEnum.class})
+public class SexEnumHandler extends AbstractEnumTypeHandler {
 }
