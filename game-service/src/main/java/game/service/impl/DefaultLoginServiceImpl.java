@@ -1,5 +1,6 @@
 package game.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.gary.util.code.RSAUtil;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
@@ -15,7 +16,6 @@ import game.world.error.GameErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ import java.util.Map;
  * @date 2015/4/24 11:21
  */
 @Slf4j
-@Service
+@Service(version = "1.0")
 public class DefaultLoginServiceImpl extends BasicLoginServiceImpl<LoginInfo> {
     @Autowired
     private PlayerMapper userMapper;

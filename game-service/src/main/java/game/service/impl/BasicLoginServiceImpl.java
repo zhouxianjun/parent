@@ -100,8 +100,8 @@ public abstract class BasicLoginServiceImpl<O extends LoginInfo> implements Logi
         Server min = null;
         while (serverIt.hasNext()){
             Server server = serverIt.next().getValue();
-            if (server.getCur() >= server.getMax()){
-                if (min == null || server.getCur() < min.getCur()) {
+            if (server.getCur() >= server.getMax() || !server.isOnline()){
+                if ((min == null || server.getCur() < min.getCur()) && server.isOnline()) {
                     min = server;
                 }
                 serverIt.remove();

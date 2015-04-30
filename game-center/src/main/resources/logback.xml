@@ -118,6 +118,10 @@
 		<appender-ref ref="ASYNC"/>
 		<appender-ref ref="stdout"/>
 	</logger>
+	<logger name="com.gary" level="${filter.logback.level}" additivity="false">
+		<appender-ref ref="ASYNC"/>
+		<appender-ref ref="stdout"/>
+	</logger>
 	<logger name="game.dao" level="${filter.logback.level}" additivity="false">
 		<appender-ref ref="SQLASYNC"/>
 	</logger>

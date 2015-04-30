@@ -1,14 +1,16 @@
 package game.center.event;
 
+import com.gary.netty.codec.Worker;
+import com.gary.netty.disruptor.DisruptorEvent;
+import com.gary.netty.event.HandlerEvent;
+import com.gary.netty.event.ReceivedEvent;
+import com.gary.netty.handler.Handler;
+import com.gary.netty.net.Packet;
+import com.gary.netty.protobuf.ResultPro;
 import com.sun.tools.javac.util.Assert;
 import game.center.Cache;
+import game.center.WorldManager;
 import game.world.Server;
-import game.world.event.HandlerEvent;
-import game.world.event.ReceivedEvent;
-import game.world.handler.Handler;
-import game.world.net.Packet;
-import game.world.netty.codec.Worker;
-import game.world.protobuf.ResultPro;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,5 +36,10 @@ public class ServerReceivedEvent extends ReceivedEvent<Server> {
             return;
         }
         handle(handlerEvent);
+    }
+
+    @Override
+    protected DisruptorEvent getDisruptorEvent() {
+        return WorldManager.getInstance().getDbWorkers();
     }
 }

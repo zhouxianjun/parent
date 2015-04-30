@@ -2,14 +2,16 @@ package game.world;
 
 import com.google.protobuf.MessageLite;
 import game.world.utils.BasicProto;
+import game.world.utils.MemcachedCacheVar;
+import game.world.utils.MemcachedUtil;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author zhouxianjun(Gary)
@@ -52,5 +54,20 @@ public class Server extends BasicProto implements Serializable {
 
     public String getAddress(){
         return getIp() + ":" + getPort();
+    }
+
+    public static Server getServer(String address){
+        Map<Integer, Map<String, Server>> servers = MemcachedUtil.get(MemcachedCacheVar.ALL_GAME_SERVER);
+        if (servers == null){
+            return null;
+        }
+        Iterator<Map<String, Server>> it = servers.values().iterator();
+        while (it.hasNext()){
+            Server server = it.next().get(address);
+            if (server != null){
+                return server;
+            }
+        }
+        return null;
     }
 }

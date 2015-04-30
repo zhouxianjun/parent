@@ -1,12 +1,11 @@
 package game.center;
 
+import com.gary.netty.AbstractServer;
+import com.gary.netty.handler.Handler;
+import com.gary.netty.net.Dispatcher;
 import game.center.codec.ServerDecoderHandler;
 import game.center.codec.ServerEncoder;
 import game.world.AppContext;
-import game.world.WorldManager;
-import game.world.handler.Handler;
-import game.world.net.Dispatcher;
-import game.world.netty.AbstractServer;
 import io.netty.channel.ChannelHandler;
 
 /**
@@ -36,6 +35,6 @@ public class CenterServer extends AbstractServer {
         new AppContext(new String[]{"spring*.xml"});
         CenterServer centerServer = new CenterServer(1, 1);
         centerServer.start(4000);
-        Cache.CENTER_EVENT_CMD = Dispatcher.getHandlers(Handler.class);
+        Cache.CENTER_EVENT_CMD = Dispatcher.getHandlers(Handler.class, AppContext.getApplicationContext());
     }
 }

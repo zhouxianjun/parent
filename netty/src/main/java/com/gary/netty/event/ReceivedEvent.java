@@ -48,7 +48,7 @@ public abstract class ReceivedEvent<T> implements Runnable, Event<T> {
     }
 
     protected void handle(final HandlerEvent<Handler> handlerEvent){
-        if(!handlerEvent.isAsync() && getDisruptorEvent() != null) {
+        if(!handlerEvent.isAsync() || getDisruptorEvent() == null) {
             handle(this, handlerEvent.getHandler());
         } else {
             getDisruptorEvent().publish(new Runnable() {

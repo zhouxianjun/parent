@@ -1,7 +1,7 @@
 package game.center;
 
-import game.world.event.HandlerEvent;
-import game.world.handler.Handler;
+import com.gary.netty.event.HandlerEvent;
+import com.gary.netty.handler.Handler;
 
 import java.util.Map;
 
