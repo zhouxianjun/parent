@@ -1,9 +1,11 @@
 package com.gary.dao.dto;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.beans.Transient;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,8 @@ import java.util.List;
  * @date 2015/4/29 13:39
  */
 public abstract class AbstractTable {
+    @Transient
+    @JsonIgnore
     public String getTableSql(){
         Class<? extends AbstractTable> tableClass = this.getClass();
         Field[] fields = tableClass.getDeclaredFields();

@@ -104,7 +104,7 @@ public class ErrorsUtil implements Errors {
 			}
 			if (key != null)
 				map.put(name, key);
-			ErrorMsg errorMsg = c.getAnnotation(ErrorMsg.class);
+			ErrorMsg errorMsg = field.getAnnotation(ErrorMsg.class);
 			if (errorMsg != null){
 				errorsDescTemp.put(name, errorMsg.value());
 			}

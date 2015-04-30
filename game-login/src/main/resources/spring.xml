@@ -15,4 +15,53 @@
     <bean class="game.world.utils.MemcachedUtil">
         <property name="memcachedClient" ref="memcachedClient"/>
     </bean>
+
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+    <!-- 注入Jackson XML -->
+    <bean id="xmlMapper" class="com.fasterxml.jackson.xml.XmlMapper" />
+    <!-- 注入异常类型,如果出了key的异常就取value的errorCode -->
+    <bean id="exceptionMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="net.sf.json.JSONException" value="100" value-type="java.lang.Integer" />
+            </map>
+        </constructor-arg>
+    </bean>
+    <!-- 注入内存错误代码class -->
+    <bean id="errorsUtil" class="com.gary.util.ErrorsUtil">
+        <property name="errorsCodeClasses">
+            <list>
+                <value>game.world.error.GameErrorCode</value>
+            </list>
+        </property>
+        <property name="errorsDescClasses">
+            <list>
+                <value></value>
+            </list>
+        </property>
+        <!-- 表示自定义错误代码以及错误描述的包位置 -->
+        <property name="basePackage" value="com.gary.wl.error" />
+    </bean>
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="messageConverters" /><!-- json转换器 -->
+            </list>
+        </property>
+    </bean>
+    <!-- Http messageConverters，用于将对象输出到客户端-->
+    <bean id="messageConverters" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+     <!--全局异常处理-->
+    <bean id="handlerExceptionResolver" class="com.gary.web.exception.AnnotationHandlerMethodExceptionResolver">
+        <property name="messageConverters" ref="messageConverters"/>
+    </bean>
+    <!--srping全局上下文-->
+    <bean id="applicationContextHolder" class="com.gary.web.config.ApplicationContextHolder" />
 </beans>

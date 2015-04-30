@@ -1,5 +1,6 @@
 package game.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.gary.web.result.ExecuteResult;
 import com.gary.web.result.Result;
 import game.mapper.player.PlayerMapper;
@@ -17,6 +18,7 @@ import java.util.Map;
  * @Description:玩家服务
  * @date 2015/4/30 16:17
  */
+@Service(version = "1.0")
 public class PlayerServiceImpl implements PlayerService {
 
     @Autowired

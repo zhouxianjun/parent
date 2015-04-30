@@ -1,9 +1,10 @@
 package com.gary.web.result;
 
+import com.gary.util.ErrorsUtil;
+import com.gary.web.util.I18nUtil;
+
 import java.io.Serializable;
 import java.util.Locale;
-
-import com.gary.web.util.ErrorsUtil;
 
 public class ExecuteResult implements Serializable {
 	private static final long serialVersionUID = -7503032276558725008L;
@@ -28,7 +29,11 @@ public class ExecuteResult implements Serializable {
 		this.result = result;
 	}
 	public String getResultMsg() {
-		return resultMsg == null ? ErrorsUtil.getErrorDesc(this.result, locale) : this.resultMsg;
+		if (resultMsg == null){
+			String msg = I18nUtil.getMessage(String.valueOf(this.result), locale);
+			return msg == null ? ErrorsUtil.getErrorDesc(this.result) : msg;
+		}
+		return this.resultMsg;
 	}
 	public void setResultMsg(String resultMsg) {
 		this.resultMsg = resultMsg;

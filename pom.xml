@@ -11,7 +11,7 @@
 		<module>dao</module>
 		<module>util</module>
 		<module>web</module>
-		<module>payment</module>
+		<!--<module>payment</module>-->
 		<module>game-common</module>
 		<module>game-protobuf</module>
 		<module>game-server</module>
@@ -86,7 +86,7 @@
 					<encoding>UTF-8</encoding>
                     <compilerArguments>
                         <verbose />
-                        <bootclasspath>/usr/java/jdk1.7.0_71/jre/lib/rt.jar:/usr/java/jdk1.7.0_71/jre/lib/jce.jar</bootclasspath>
+                        <!--<bootclasspath>/usr/java/jdk1.7.0_71/jre/lib/rt.jar:/usr/java/jdk1.7.0_71/jre/lib/jce.jar</bootclasspath>-->
                     </compilerArguments>
 				</configuration>
 			</plugin>

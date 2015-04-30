@@ -28,6 +28,6 @@ public class ServiceTest extends AbstractJUnit4SpringContextTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        loginService.login(loginInfo, "", null, null);
+        //loginService.login(loginInfo, "", null, null);
     }
 }

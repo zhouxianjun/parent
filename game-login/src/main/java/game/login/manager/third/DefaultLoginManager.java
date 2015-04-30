@@ -50,6 +50,7 @@ public class DefaultLoginManager extends AbstractLoginManager<LoginInfo> impleme
                     return result.setExecuteResult(new ExecuteResult(GameErrorCode.PASSWORD_VALID_ERROR));
                 }
             }else {
+                info.setPassword(pwd);
                 player = this.reg(info, ip, request, response);
                 result = playerService.reg(player);
                 if (!result.isSuccess()){
@@ -99,5 +100,14 @@ public class DefaultLoginManager extends AbstractLoginManager<LoginInfo> impleme
     @Override
     public <T> T getUser(String key) {
         return null;
+    }
+
+    public static void main(String[] args) {
+        try {
+            String pwd = RSAUtil.encryptBASE64(RSAUtil.encryptByPublicKey("123456".getBytes()));
+            System.out.printf(pwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
