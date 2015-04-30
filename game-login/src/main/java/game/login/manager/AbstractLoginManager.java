@@ -1,12 +1,12 @@
-package game.service.impl;
+package game.login.manager;
 
 import com.google.common.collect.Maps;
 import game.world.Server;
 import game.world.dto.LoginInfo;
-import game.world.service.LoginService;
 import game.world.utils.MemcachedCacheVar;
 import game.world.utils.MemcachedUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,9 +16,10 @@ import java.util.Map;
  * @author zhouxianjun(Gary)
  * @ClassName:
  * @Description:
- * @date 2015/4/23 16:02
+ * @date 2015/4/30 15:55
  */
-public abstract class BasicLoginServiceImpl<O extends LoginInfo> implements LoginService<O> {
+public abstract class AbstractLoginManager<I extends LoginInfo> implements LoginManager<I> {
+    protected Md5PasswordEncoder md5 = new Md5PasswordEncoder();
     @Override
     public Server getServer(String version, Integer area) {
         Map<Integer, Map<String, Server>> servers = MemcachedUtil.get(MemcachedCacheVar.ALL_GAME_SERVER);

@@ -2,7 +2,7 @@ package game.service;
 
 import com.gary.util.code.RSAUtil;
 import game.world.dto.LoginInfo;
-import game.world.service.LoginService;
+import game.world.service.PlayerService;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -18,7 +18,7 @@ public class ServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void login(){
-        LoginService loginService = applicationContext.getBean(LoginService.class);
+        PlayerService loginService = applicationContext.getBean(PlayerService.class);
         System.out.println(loginService);
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setName("test");
