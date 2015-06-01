@@ -20,11 +20,12 @@ public class TestClient extends AbstractClient {
 
     @Override
     protected void connected(final Channel channel) {
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true){
                     channel.writeAndFlush(Packet.createGlobalException());
+                    System.out.println("11111");
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
@@ -32,8 +33,8 @@ public class TestClient extends AbstractClient {
                     }
                 }
             }
-        }).start();
-        System.out.println("11111");
+        }).start();*/
+        channel.writeAndFlush(Packet.createGlobalException());
     }
 
     @Override

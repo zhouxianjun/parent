@@ -2,7 +2,7 @@ package com.gary.netty;
 
 import com.gary.netty.codec.Worker;
 import com.gary.netty.listeners.UserStateListener;
-import com.sun.xml.internal.ws.api.message.Packet;
+import com.gary.netty.net.Packet;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
