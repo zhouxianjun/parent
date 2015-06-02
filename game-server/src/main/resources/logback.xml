@@ -23,6 +23,17 @@
 			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
 		</encoder>
 	</appender>
+	<appender name="nettyfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 按天分文件存放 ，并压缩 -->
+			<fileNamePattern>${filter.logback.dir}/netty.%d{yyyy-MM-dd}.txt</fileNamePattern>
+			<!-- 例如，假设每天滚动，且 maxHistory 是 6，则只 保留最近 6 天的归档文件，删除之前的文件。 -->
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+		</encoder>
+	</appender>
 	<appender name="sqlfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 按天分文件存放 ，并压缩 -->
@@ -88,6 +99,14 @@
 		<!-- 添加附加的appender,最多只能添加一个 -->
 		<appender-ref ref ="logfile"/>
 	</appender>
+	<appender name ="NETTYASYNC" class= "ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold >0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref ="nettyfile"/>
+	</appender>
 	<appender name ="SQLASYNC" class= "ch.qos.logback.classic.AsyncAppender">
 		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
 		<discardingThreshold >0</discardingThreshold>
@@ -124,6 +143,9 @@
 	</logger>
 	<logger name="game.dao" level="${filter.logback.level}" additivity="false">
 		<appender-ref ref="SQLASYNC"/>
+	</logger>
+	<logger name="io.netty" level="${filter.logback.level}" additivity="false">
+		<appender-ref ref="NETTYASYNC"/>
 	</logger>
 	<logger name="statisticsThreadLog" level="${filter.logback.level}" additivity="false">
 		<appender-ref ref="STATISTICSTHREADASYNC" />

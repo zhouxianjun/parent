@@ -8,6 +8,8 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +49,7 @@ public abstract class AbstractServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline channelPipeline = ch.pipeline();
-                            channelPipeline.addLast(getDecoderHandler()).addLast(getEncoderHandler());
+                            channelPipeline.addLast(new LoggingHandler("io.netty-log", LogLevel.DEBUG)).addLast(getDecoderHandler()).addLast(getEncoderHandler());
                             if (stateChange){
                                 channelPipeline.addLast("idleStateHandler", new IdleStateHandler(readTimeOut, writerTimeOut, 0));
                             }

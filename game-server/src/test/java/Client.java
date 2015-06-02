@@ -19,16 +19,15 @@ public class Client {
         Packet packet = Packet.createGlobalException();
         dos.writeShort(packet.calcSize()); //输出总长度
         dos.writeShort(packet.getCmd()); //命令
-        if (packet.getRet() != null){
-            dos.write(packet.getRet().toByteArray());
-        }
+        dos.writeShort(packet.getRet().toByteArray().length);
+        dos.write(packet.getRet().toByteArray());
         if (packet.getBody() != null){
             dos.write(packet.getBody().toByteArray());
         }
 
-        DataInputStream dis = new DataInputStream(client.getInputStream());
+//        DataInputStream dis = new DataInputStream(client.getInputStream());
         dos.flush();
-        while (true){
+        /*while (true){
             if (dis.readBoolean()) {
                 short length = dis.readShort();
                 short cmd = dis.readShort();
@@ -39,9 +38,9 @@ public class Client {
                 // dis.readFully();
                 System.out.println("收到--" + length + "----0x" + Integer.toHexString(cmd));
             }
-        }
-        //dos.close();
-        //client.close();
+        }*/
+        dos.close();
+        client.close();
     }
 
     private static String getSetMethodName(String name){

@@ -86,7 +86,7 @@
 					<encoding>UTF-8</encoding>
                     <compilerArguments>
                         <verbose />
-                        <!--<bootclasspath>/usr/java/jdk1.7.0_71/jre/lib/rt.jar:/usr/java/jdk1.7.0_71/jre/lib/jce.jar</bootclasspath>-->
+                        <bootclasspath>C:\Program Files\Java\jdk1.7.0_67\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_67\jre\lib\jce.jar</bootclasspath>
                     </compilerArguments>
 				</configuration>
 			</plugin>
