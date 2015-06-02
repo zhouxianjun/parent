@@ -49,7 +49,7 @@ public abstract class AbstractServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline channelPipeline = ch.pipeline();
-                            channelPipeline.addLast(new LoggingHandler("io.netty-log", LogLevel.DEBUG)).addLast(getDecoderHandler()).addLast(getEncoderHandler());
+                            channelPipeline.addLast(new LoggingHandler(LogLevel.DEBUG)).addLast(getDecoderHandler()).addLast(getEncoderHandler());
                             if (stateChange){
                                 channelPipeline.addLast("idleStateHandler", new IdleStateHandler(readTimeOut, writerTimeOut, 0));
                             }
