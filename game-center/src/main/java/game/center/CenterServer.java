@@ -1,11 +1,14 @@
 package game.center;
 
 import com.gary.netty.AbstractServer;
+import com.gary.netty.codec.BasicDecoderHandler;
 import com.gary.netty.handler.Handler;
 import com.gary.netty.net.Dispatcher;
 import game.center.codec.ServerDecoderHandler;
 import game.center.codec.ServerEncoder;
+import game.center.codec.ServerWorker;
 import game.world.AppContext;
+import game.world.Server;
 import io.netty.channel.ChannelHandler;
 
 /**
@@ -22,12 +25,7 @@ public class CenterServer extends AbstractServer {
 
     @Override
     protected ChannelHandler getDecoderHandler() {
-        return new ServerDecoderHandler(getAllChannels());
-    }
-
-    @Override
-    protected ChannelHandler getEncoderHandler() {
-        return new ServerEncoder();
+        return new BasicDecoderHandler<ServerWorker, Server>(getAllChannels(), ServerWorker.class);
     }
 
     public static void main(String[] args) {

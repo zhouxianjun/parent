@@ -1,5 +1,6 @@
 package com.gary.netty;
 
+import com.gary.netty.codec.BasicEncoderHandler;
 import com.gary.netty.net.Packet;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -143,7 +144,7 @@ public abstract class AbstractClient {
         }
     }
 
-    protected ChannelGroup getAllChannels(){
+    public ChannelGroup getAllChannels(){
         if (allChannels == null){
             allChannels = new DefaultChannelGroup(new DefaultEventExecutorGroup(1).next());
         }
@@ -151,11 +152,6 @@ public abstract class AbstractClient {
     }
     protected abstract ChannelHandler getDecoderHandler();
     protected ChannelHandler getEncoderHandler(){
-        return new MessageToByteEncoder<Packet>() {
-            @Override
-            protected void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) throws Exception {
-                msg.write(out);
-            }
-        };
+        return new BasicEncoderHandler();
     }
 }

@@ -6,6 +6,7 @@ import com.gary.netty.protobuf.ResultPro;
 import com.gary.util.ClassUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public abstract class Worker<T, E extends ReceivedEvent> {
     public static final int CORE_NUM = Runtime.getRuntime().availableProcessors();
+    public static final AttributeKey PLAYER_KEY = AttributeKey.valueOf("player");
     public final String ip;
     private final Channel channel;
     private volatile T object;
@@ -80,6 +82,7 @@ public abstract class Worker<T, E extends ReceivedEvent> {
             this.taskExec = task;
         }
         this.object = object;
+        channel.attr(PLAYER_KEY).set(object);
     }
 
     /**

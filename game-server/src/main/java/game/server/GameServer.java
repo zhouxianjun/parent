@@ -1,15 +1,16 @@
 package game.server;
 
 import com.gary.netty.AbstractServer;
+import com.gary.netty.codec.BasicDecoderHandler;
+import com.gary.netty.codec.BasicEncoderHandler;
 import com.gary.netty.handler.Handler;
 import com.gary.netty.net.Dispatcher;
 import com.google.common.collect.Maps;
-import game.server.codec.CenterEncoder;
-import game.server.codec.CenterClientDecoderHandler;
-import game.server.codec.PlayerClientDecoderHandler;
+import game.server.codec.*;
+import game.server.event.PlayerReceivedEvent;
 import game.world.AppContext;
 import game.world.Server;
-import game.server.codec.PlayerEncoder;
+import game.world.dto.PlayerUser;
 import game.world.utils.MemcachedCacheVar;
 import game.world.utils.MemcachedUtil;
 import io.netty.channel.ChannelHandler;
@@ -90,6 +91,9 @@ public class GameServer extends AbstractServer {
                     future.awaitUninterruptibly();// 阻塞，直到服务器关闭
                     ChannelGroupFuture futureCenter = centerClient.getAllChannels().close();
                     futureCenter.awaitUninterruptibly();// 阻塞，直到服务器关闭
+
+                    //删除自己所保存的
+                    MemcachedUtil.delAll();
                 } catch (Exception e) {
                     log.error("停止服务器异常!", e);
                 } finally {
@@ -103,11 +107,6 @@ public class GameServer extends AbstractServer {
 
     @Override
     protected ChannelHandler getDecoderHandler() {
-        return new PlayerClientDecoderHandler(getAllChannels());
-    }
-
-    @Override
-    protected ChannelHandler getEncoderHandler() {
-        return new PlayerEncoder();
+        return new BasicDecoderHandler<PlayerWorker, PlayerUser>(getAllChannels(), PlayerWorker.class);
     }
 }

@@ -1,5 +1,6 @@
 package com.gary.netty;
 
+import com.gary.netty.codec.BasicEncoderHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -77,5 +78,7 @@ public abstract class AbstractServer {
     }
 
     protected abstract ChannelHandler getDecoderHandler();
-    protected abstract ChannelHandler getEncoderHandler();
+    protected ChannelHandler getEncoderHandler(){
+        return new BasicEncoderHandler();
+    }
 }

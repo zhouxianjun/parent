@@ -3,6 +3,9 @@ package game.server;
 import com.gary.netty.BasicUser;
 import com.gary.netty.disruptor.DisruptorEvent;
 import com.gary.netty.listeners.UserStateListener;
+import game.world.AppContext;
+import game.world.Server;
+import game.world.utils.MemcachedUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Iterator;
@@ -69,6 +72,22 @@ public class WorldManager {
                 }
             }
         }, 1, 1, TimeUnit.MINUTES);
+
+        statisticsThreadTask.scheduleWithFixedDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                int stackNum = 0;
+                long cursor = 0;
+                for(int i = 0; i < GAME_THREAD_COUNT; i++) {
+                    stackNum += gameWorkers[i].stack();
+                    cursor += gameWorkers[i].cursor();
+                }
+                Server server = AppContext.getBean(Server.class);
+                MemcachedUtil.set(Cache.Keys.THREAD_DB + server.getAddress(), dbWorkers.stack());
+                MemcachedUtil.set(Cache.Keys.THREAD_GAME + server.getAddress(), stackNum);
+            }
+        }, 60, 30, TimeUnit.SECONDS);
     }
 
     private ScheduledExecutorService onlineUserTask = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
@@ -76,6 +95,15 @@ public class WorldManager {
         @Override
         public Thread newThread(Runnable r) {
             Thread thread = new Thread(r, "ONLINE_USER_TASK");
+            return thread;
+        }
+    });
+
+    private ScheduledExecutorService statisticsThreadTask = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r, "STATISTICS_THREAD_TASK");
             return thread;
         }
     });
@@ -114,27 +142,9 @@ public class WorldManager {
     }
 
     public void stop(){
-       /* updateExec.shutdownNow();
-        onlineUserTask.shutdownNow();
-        aiSheduled.shutdownNow();
-        for (int i = 0; i < GAME_THREAD_COUNT; i++) {
-            gameWorkers[i].shutdown();
-        }
-
-        for(int i = 0; i < PK_WORKER_NUM; i ++) {
-            pkWorkers[i].shutdown();
-        }
-        for(int i = 0; i < MULTI_PK_WORKER_NUM; i ++) {
-            multiPkWorkers[i].shutdown();
-        }
-        for(ScheduledExecutorService scheduled : scheduledList) {
-            scheduled.shutdownNow();
-        }
-
         dbWorkers.shutdown();
-        loginWorkers.shutdown();
-        HttpDispatcher.shutdown();
-        LogService.shutdown();*/
+        onlineUserTask.shutdown();
+        statisticsThreadTask.shutdown();
         log.info("成功并优雅的停止了服务器......");
     }
 }

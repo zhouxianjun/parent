@@ -1,18 +1,16 @@
 package game.server;
 
 import com.gary.netty.AbstractClient;
+import com.gary.netty.codec.BasicDecoderHandler;
+import com.gary.netty.codec.Worker;
 import com.gary.netty.net.Packet;
-import game.server.codec.CenterClientDecoderHandler;
-import game.server.codec.CenterEncoder;
+import game.server.codec.CenterWorker;
 import game.world.AppCmd;
 import game.world.AppContext;
 import game.world.Server;
 import game.world.protobuf.ServerPro;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
-import io.netty.channel.group.ChannelGroup;
 
 /**
  * @author zhouxianjun(Gary)
@@ -30,21 +28,16 @@ public class CenterClient extends AbstractClient {
     protected void connected(Channel channel) {
         ServerPro.Server.Builder server = ServerPro.Server.newBuilder();
         AppContext.getBean(Server.class).parseObject(server);
+        Server s = new Server();
+        s.setIp(ip);
+        s.setPort(port);
+        s.setName(name);
+        channel.attr(Worker.PLAYER_KEY).set(s);
         channel.writeAndFlush(Packet.createSuccess(AppCmd.CENTER_CONNECT, server.build()));
     }
 
     @Override
     protected ChannelHandler getDecoderHandler() {
-        return new CenterClientDecoderHandler(getAllChannels());
-    }
-
-    @Override
-    protected ChannelHandler getEncoderHandler() {
-        return new CenterEncoder();
-    }
-
-    @Override
-    protected ChannelGroup getAllChannels() {
-        return super.getAllChannels();
+        return new BasicDecoderHandler<CenterWorker, Server>(getAllChannels(), CenterWorker.class);
     }
 }

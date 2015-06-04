@@ -13,4 +13,9 @@ import java.util.Map;
  */
 public class Cache {
     public static Map<Short, HandlerEvent<Handler>> GAME_EVENT_CMD = null;
+
+    class Keys{
+        public static final String THREAD_DB = "game:thread:db";
+        public static final String THREAD_GAME = "game:thread:game";
+    }
 }

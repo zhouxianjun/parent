@@ -43,8 +43,8 @@ public abstract class ReceivedEvent<T> implements Runnable, Event<T> {
     public void write(Packet packet) {
         if (packet.getCmd() == null)
             packet.setCmd(cmd);
-        channel.writeAndFlush(packet);
-        log.debug("回复消息：IP:{}, 玩家:{}, CMD:0x{}, 耗时:{}毫秒", new Object[]{worker.ip, object, Integer.toHexString(cmd), System.currentTimeMillis() - startTime});
+        channel.writeAndFlush(packet.setStartTime(startTime));
+        //log.debug("回复消息：IP:{}, 玩家:{}, CMD:0x{}, 耗时:{}毫秒", new Object[]{worker.ip, object, Integer.toHexString(cmd), System.currentTimeMillis() - startTime});
     }
 
     protected void handle(final HandlerEvent<Handler> handlerEvent){

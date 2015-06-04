@@ -11,6 +11,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
@@ -27,6 +28,8 @@ public abstract class AbstractDecoderHandler<W extends Worker<T, ? extends Recei
     private final ChannelGroup channelGroup;
     private Channel channel;
     protected Worker<T, ? extends ReceivedEvent<T>> worker;
+    @Setter
+    protected Class workerClass;
     public AbstractDecoderHandler(ChannelGroup channelGroup) {
         super(4096, 0, 2, 0, 0);
         this.channelGroup = channelGroup;
@@ -65,7 +68,7 @@ public abstract class AbstractDecoderHandler<W extends Worker<T, ? extends Recei
             //消息RET
             final byte[] body = new byte[buffer.readableBytes()];
             buffer.readBytes(body);
-            log.info("接收到消息:ip:{}, code:{},msg:{}", new Object[]{((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress(), result.getCode(), result.getMsg()});
+            log.info("接收到消息:ip:{}, code:{}, msg:{}", new Object[]{((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress(), result.getCode(), result.getMsg()});
             messageReceived(buffer, totalLength, cmd, result, body);
         } catch (Exception e) {
             log.error("IP:"+ worker.ip +" 接收消息异常:不符合标准!", e);
@@ -127,7 +130,7 @@ public abstract class AbstractDecoderHandler<W extends Worker<T, ? extends Recei
         }
     }
     protected Class<? extends Worker<T, ? extends ReceivedEvent<T>>> getWorkerClass(){
-       return (Class<? extends Worker<T, ? extends ReceivedEvent<T>>>) ClassUtil.getSuperClassGenricType(getClass(), 0);
+       return workerClass == null ? (Class<? extends Worker<T, ? extends ReceivedEvent<T>>>) ClassUtil.getSuperClassGenricType(getClass(), 0) : workerClass;
     }
 
     /**

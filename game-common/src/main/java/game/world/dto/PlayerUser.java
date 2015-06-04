@@ -17,4 +17,8 @@ public class PlayerUser extends BasicUser<Server> {
     protected List<? extends UserStateListener> getUserStateListeners() {
         return null;
     }
+
+    public String toString(){
+        return this.id;
+    }
 }

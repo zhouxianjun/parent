@@ -6,9 +6,7 @@ import com.gary.util.ErrorsUtil;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Locale;
@@ -20,15 +18,17 @@ import java.util.Locale;
  * @date 2015/3/6 10:29
  */
 @Slf4j
-@Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class Packet {
+    @Setter
     private Short cmd;
 
     private MessageLite ret;
 
     private MessageLite body;
+
+    private long startTime;
 
     public MessageLite getRet(){
         if (ret == null)
@@ -48,7 +48,7 @@ public class Packet {
     public static Packet createException(Short cmd, int errorCode, MessageLite body){
         ResultPro.Result.Builder result = ResultPro.Result.newBuilder();
         result.setCode(errorCode);
-        return new Packet(cmd, result.build(), body);
+        return new Packet(cmd, result.build(), body, 0);
     }
 
     public static Packet createGlobalException(){
@@ -60,11 +60,7 @@ public class Packet {
     }
 
     public static Packet createSuccess(short cmd, MessageLite body){
-        return new Packet(cmd, null, body);
-    }
-
-    public static Packet createSuccess(MessageLite body){
-        return new Packet(null, null, body);
+        return new Packet(cmd, null, body, 0);
     }
 
     public static Packet createError(int errorCode, MessageLite body){
@@ -89,6 +85,11 @@ public class Packet {
         if(getBody() != null) {
             byteBuf.writeBytes(getBody().toByteArray());
         }
+    }
+
+    public Packet setStartTime(long startTime){
+        this.startTime = startTime;
+        return this;
     }
 
     public static final Packet PING = createSuccess(Cmd.PING, null);

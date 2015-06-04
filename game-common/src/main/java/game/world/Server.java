@@ -70,4 +70,8 @@ public class Server extends BasicProto implements Serializable {
         }
         return null;
     }
+
+    public String toString(){
+        return getAddress();
+    }
 }

@@ -5,6 +5,7 @@ import com.gary.netty.handler.Handler;
 import com.gary.netty.net.Cmd;
 import com.gary.netty.net.Packet;
 import game.world.AppCmd;
+import game.world.dto.PlayerUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Cmd(AppCmd.LOGIN)
 @Slf4j
-public class LoginHandler implements Handler {
+public class LoginHandler implements Handler<PlayerUser> {
     @Override
-    public void handle(Event event) throws Exception {
+    public void handle(Event<PlayerUser> event) throws Exception {
         log.debug("收到登录请求...");
-        event.write(Packet.createGlobalException(100));
+        event.write(Packet.createGlobalException());
     }
 }
