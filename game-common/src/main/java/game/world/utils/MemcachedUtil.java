@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.rubyeye.xmemcached.MemcachedClient;
+import net.rubyeye.xmemcached.exception.MemcachedException;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -71,7 +72,11 @@ public class MemcachedUtil {
 	public static void delAll(){
 		Iterator<String> iterator = keys.iterator();
 		while (iterator.hasNext()){
-			delete(iterator.next());
+			try {
+				memcachedClient.deleteWithNoReply(iterator.next());
+			} catch (Exception e) {
+				log.warn("批量删除MEM缓存", e);
+			}
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class Client {
         byte[] b = builder.build().toByteArray();
         byte[] data = new byte[]{8, 1, 18, 12, -26, -109, -115, -28, -67, -100, -26, -120, -112, -27, -118, -97};
         dos.writeShort(3 + b.length); //输出总长度
-        dos.writeShort(packet.getCmd()); //命令
+        dos.writeShort(0x0002); //命令
         dos.writeShort(b.length);
         dos.write(b);
         if (packet.getBody() != null){

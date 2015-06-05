@@ -20,7 +20,7 @@
         </constructor-arg>       
         <property name="connectionPoolSize" value="2"></property>
         <property name="commandFactory">
-            <bean class="net.rubyeye.xmemcached.command.TextCommandFactory"></bean>
+            <bean class="net.rubyeye.xmemcached.command.BinaryCommandFactory"></bean>
         </property>
         <property name="sessionLocator">
             <bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator"></bean>

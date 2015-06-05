@@ -62,7 +62,7 @@ public class GameServer extends AbstractServer {
             gameServer = new GameServer(config.getGameServerBossThread(), config.getGameServerWorkerThread());
             gameServer.start(server.getPort());
 
-            connectCenter(config);
+            //connectCenter(config);
 
             Map<Integer, Map<String, Server>> servers = MemcachedUtil.get(MemcachedCacheVar.ALL_GAME_SERVER);
             if (servers == null){

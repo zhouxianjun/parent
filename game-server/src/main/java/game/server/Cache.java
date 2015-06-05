@@ -17,5 +17,6 @@ public class Cache {
     class Keys{
         public static final String THREAD_DB = "game:thread:db";
         public static final String THREAD_GAME = "game:thread:game";
+        public static final String THREAD_LOG = "game:thread:log";
     }
 }

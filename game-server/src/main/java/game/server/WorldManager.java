@@ -7,6 +7,8 @@ import game.world.AppContext;
 import game.world.Server;
 import game.world.utils.MemcachedUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +26,8 @@ public class WorldManager {
 
     private DisruptorEvent dbWorkers;
 
+    private DisruptorEvent logWorkers;
+
     private DisruptorEvent[] gameWorkers;
 
     private ConcurrentHashMap<Integer, BasicUser> onlineUserMap = new ConcurrentHashMap<Integer, BasicUser>();
@@ -32,11 +36,14 @@ public class WorldManager {
 
     public static final int GAME_THREAD_COUNT = getClosestPowerOf2(CORE_NUM);
     public static final int GAME_THREAD_COUNT_TO_MOD = GAME_THREAD_COUNT - 1;
+    private static Logger threadLog = LoggerFactory.getLogger("statisticsThreadLog");
 
     /**
      * 离线超时时间
      */
     public static final int OFF_LINE_TIMEOUT = 120000;
+
+    private static final int LOG_THREAD_COUNT = 10;
 
     private static final WorldManager worldManager = new WorldManager();
 
@@ -47,6 +54,8 @@ public class WorldManager {
     public void init(){
         // ------------- 初始化 db worker（执行DB操作） ----------------
         dbWorkers = new DisruptorEvent("DB_WORKER_", GAME_THREAD_COUNT * 2, 1 << 16);
+
+        logWorkers = new DisruptorEvent("LOG_WORKER_", LOG_THREAD_COUNT, 1 << 10);
 
         // ------------- 初始化 game worker(线性执行) -----------------
         gameWorkers = new DisruptorEvent[GAME_THREAD_COUNT];
@@ -86,6 +95,10 @@ public class WorldManager {
                 Server server = AppContext.getBean(Server.class);
                 MemcachedUtil.set(Cache.Keys.THREAD_DB + server.getAddress(), dbWorkers.stack());
                 MemcachedUtil.set(Cache.Keys.THREAD_GAME + server.getAddress(), stackNum);
+                MemcachedUtil.set(Cache.Keys.THREAD_LOG + server.getAddress(), logWorkers.stack());
+                threadLog.info("DB_WORKER_SIZE={}, DB_WORKER_CURSOR={}", dbWorkers.stack(), dbWorkers.cursor());
+                threadLog.info("GAME_WORKER_STACK_SIZE={},GAME_WORKER_CURSOR={}", stackNum, cursor);
+                threadLog.info("LOG_WORKER_STACK_SIZE={}, LOG_WORKER_CURSOR={}", logWorkers.stack(), logWorkers.cursor());
             }
         }, 60, 30, TimeUnit.SECONDS);
     }
