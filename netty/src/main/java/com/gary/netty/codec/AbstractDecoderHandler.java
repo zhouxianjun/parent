@@ -89,8 +89,8 @@ public abstract class AbstractDecoderHandler<W extends Worker<T, ? extends Recei
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        disconnection();
         super.channelUnregistered(ctx);
+        disconnection();
     }
 
     @Override

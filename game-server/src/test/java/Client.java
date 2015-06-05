@@ -30,22 +30,9 @@ public class Client {
         if (packet.getBody() != null){
             dos.write(packet.getBody().toByteArray());
         }
-
-//        DataInputStream dis = new DataInputStream(client.getInputStream());
         dos.flush();
-        /*while (true){
-            if (dis.readBoolean()) {
-                short length = dis.readShort();
-                short cmd = dis.readShort();
-                //消息RET
-                //byte[] ret = new byte[length - 2];
-                //dis.read(ret);
-                //byte[] body = new byte[buffer.readableBytes()];
-                // dis.readFully();
-                System.out.println("收到--" + length + "----0x" + Integer.toHexString(cmd));
-            }
-        }*/
         dos.close();
+        Thread.sleep(1000);
         client.close();
     }
 
